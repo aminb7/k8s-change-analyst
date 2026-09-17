@@ -1,6 +1,6 @@
 CLUSTER := change-analyst
 
-.PHONY: demo-up demo-down scenario-%
+.PHONY: demo-up demo-down scenario-% run test e2e
 
 demo-up:
 	kind create cluster --config deploy/demo/kind-config.yaml
@@ -18,3 +18,9 @@ demo-down:
 
 scenario-%:
 	deploy/demo/scenarios/$*.sh
+
+run:
+	uv run k8s-change-analyst run
+
+test:
+	uv run pytest -q
