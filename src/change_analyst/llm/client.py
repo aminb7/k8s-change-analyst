@@ -82,6 +82,8 @@ class ClaudeCLIClient:
                                timeout=self.timeout_s, cwd=self.workdir)
         except subprocess.TimeoutExpired as exc:
             raise LLMError(f"claude CLI timed out after {self.timeout_s}s") from exc
+        except OSError as exc:
+            raise LLMError(f"could not run claude CLI ({self.executable!r}): {exc}") from exc
         if proc.returncode != 0:
             raise LLMError(f"claude CLI exited {proc.returncode}: {proc.stderr.strip()[:500]}")
         try:

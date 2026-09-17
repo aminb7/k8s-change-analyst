@@ -80,3 +80,21 @@ def test_raises_after_two_failures(bad):
     with pytest.raises(LLMError):
         client.complete("S", "P", json_schema={"type": "object"})
     assert len(runner.calls) == 2
+
+
+def test_wraps_oserror_in_lmmerror_and_retries():
+    runner = FakeRunner([FileNotFoundError(2, "No such file", "claude"), proc(SUCCESS)])
+    client = ClaudeCLIClient(runner=runner)
+    result = client.complete("S", "P", json_schema={"type": "object"})
+    assert result.structured == {"answer": 5}
+    assert client.calls == 2
+
+
+def test_raises_lmmerror_after_two_oserrors():
+    runner = FakeRunner([FileNotFoundError(2, "No such file", "claude"),
+                         FileNotFoundError(2, "No such file", "claude")])
+    client = ClaudeCLIClient(runner=runner)
+    with pytest.raises(LLMError) as exc_info:
+        client.complete("S", "P")
+    assert "could not run claude CLI" in str(exc_info.value)
+    assert len(runner.calls) == 2
