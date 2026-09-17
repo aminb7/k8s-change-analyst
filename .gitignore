@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+reports/
+logs/
+state.json
+state.json.tmp
+.change-analyst.lock
+.env
+.e2e/
+.e2e-run.log
