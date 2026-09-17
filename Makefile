@@ -24,3 +24,6 @@ run:
 
 test:
 	uv run pytest -q
+
+e2e:
+	scripts/e2e.sh
