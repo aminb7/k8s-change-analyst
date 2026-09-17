@@ -41,6 +41,8 @@ Environment variables (or a `.env` file), prefix `CA_`:
 | `CA_LLM_MODEL` | `sonnet` | model passed to `claude --model` (empty = CLI default) |
 | `CA_LLM_TIMEOUT_S` | `180` | per LLM call timeout |
 | `CA_BEFORE_WINDOW_MIN` / `CA_SETTLE_DELAY_MIN` / `CA_MIN_AGE_MIN` / `CA_MAX_AFTER_WINDOW_MIN` | `15` / `2` / `5` / `30` | analysis windows |
+| `CA_MAX_PENDING_MIN` | `60` | force-analyze a pending change once it has waited this long |
+| `CA_FIRST_RUN_LOOKBACK_MIN` | `60` | lookback window for detecting changes when no state is saved yet |
 | `CA_MAX_CHANGES_PER_RUN` | `5` | max changes analyzed in one run |
 | `CA_MAX_AGENT_STEPS` | `6` | max tool-calling steps per agent |
 | `CA_MAX_CONCURRENCY` | `2` | max concurrent investigations; at 1, a change's two agents also run one after another |
